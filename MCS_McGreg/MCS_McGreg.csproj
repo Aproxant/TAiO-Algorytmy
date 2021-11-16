@@ -32,8 +32,25 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MCS_McGreg.McGregorMin</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="McGregorMin.cs" />
+    <Compile Include="MinimumFunctions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Max_McGreg\Max_McGreg.csproj">
+      <Project>{9c3cc8a2-d63f-4ee0-a339-25b3b200ffe5}</Project>
+      <Name>Max_McGreg</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TAiO Algorytmy\TAiO Algorytmy.csproj">
+      <Project>{63caacdb-2426-46aa-a3d1-1f108299b345}</Project>
+      <Name>TAiO Algorytmy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

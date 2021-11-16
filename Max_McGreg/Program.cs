@@ -17,16 +17,19 @@ namespace MAX_McGreg
 
             string file1 = "4_4_A_Hartman.csv";
             string file2 = "4_4_B_Hartman.csv";
-            string path1 = Path.Combine(Environment.CurrentDirectory, @"Examples\", file1);
-            string path2 = Path.Combine(Environment.CurrentDirectory, @"Examples\", file2);
+            DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
+            dir = dir.Parent.Parent.Parent;
+            string path1 = Path.Combine(dir.FullName, @"Examples\", file1);
+            string path2 = Path.Combine(dir.FullName, @"Examples\", file2);
             var G1 = GraphLoader.LoadGraph(path1);
             var G2 = GraphLoader.LoadGraph(path2);
             State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix);
-
+            //MyState s = new MyState(G1, G2);
             Console.Write("V+E Solution\n");
             McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s);
-            DateTime dk = DateTime.Now;
-            Console.WriteLine($"Execution Time is: {dk - dt}");
+
+            ///Algorithm.McGregor(new MyState(G1, G2), ref s);
+
 
         }
 
@@ -114,24 +117,6 @@ namespace MAX_McGreg
 
             }
             yield return null;
-        }
-
-        private static int getMaxScore(int[,] G1, int[,] G2)
-        {
-            int count = 0, count2 = 0;
-            for (int i = 1; i < G1.GetLength(0); i++)
-                for (int j = 0; j < i; j++)
-                {
-                    if (G1[i, j] == 1)
-                        count++;
-                }
-            for (int i = 1; i < G2.GetLength(0); i++)
-                for (int j = 0; j < i; j++)
-                {
-                    if (G2[i, j] == 1)
-                        count2++;
-                }
-            return Math.Max(count + G1.GetLength(0), count2 + G2.GetLength(0));
         }
 
     }

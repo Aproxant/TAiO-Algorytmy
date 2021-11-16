@@ -7,7 +7,7 @@ using TAiO_Algorytmy;
 
 namespace MAX_McGreg
 {
-    class State
+   public class State
     {
         public int[,] G1, G2;
         public int countOfNullNodes;
@@ -119,5 +119,6 @@ namespace MAX_McGreg
             }
             return sb.ToString();
         }
+
     }
 }

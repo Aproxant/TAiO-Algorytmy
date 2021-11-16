@@ -7,7 +7,7 @@ using TAiO_Algorytmy;
 
 namespace MAX_McGreg
 {
-    class McGregorE
+    public class McGregorE
     {
         public static void McGregor(State s, ref State max)
         {
