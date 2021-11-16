@@ -15,7 +15,7 @@ namespace MAX_McGreg
             int v1 = Program.firstNeighbour(s);
             
             if (v1 != -1)
-                analyzePair(s, v1, ref count, ref max);
+                findPair(s, v1, ref count, ref max);
 
             //case with null node
             s.AddNewPair(v1, -1, 0);
@@ -25,7 +25,7 @@ namespace MAX_McGreg
         }
 
 
-        private static void analyzePair(State s, int v1, ref int count, ref State max)
+        private static void findPair(State s, int v1, ref int count, ref State max)
         {
             foreach (var pair in Program.nextPair(s, v1))
             {
