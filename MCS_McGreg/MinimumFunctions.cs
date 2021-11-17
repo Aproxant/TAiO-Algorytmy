@@ -18,25 +18,36 @@ namespace MCS_McGreg
             Graph G2_mcs = SubstractionOfGraphs(G2, Mcs);
             List<Edge> k = FindSetOfEmbeddedEdges(Mcs, G1);
             List<Edge> k2 = FindSetOfEmbeddedEdges(Mcs, G2);
-            List<Graph> subGraphs = new List<Graph> { Mcs, G1, G2, G1_mcs, G2_mcs };
-            return GenerateGraph(subGraphs,k,k2);
+            List<Graph> subGraphs = new List<Graph> { Mcs, G1_mcs, G2_mcs };
+            return GenerateSuperGraph(subGraphs,k,k2);
         }
-        public static Graph GenerateGraph(List<Graph> graphs,List<Edge> emb1,List<Edge> emb2)
+        public static Graph GenerateSuperGraph(List<Graph> graphs, List<Edge> emb1, List<Edge> emb2)
         {
             int[,] Min = new int[graphs[1].Size, graphs[1].Size];
-            foreach(var sub in graphs)
+            int counter = 0;
+            foreach (var sub in graphs)
             {
-                for(int i=0;i<sub.Size;i++)
+
+                if (counter == 2)
                 {
-                    for(int j=0;j<sub.Size;j++)
+                    foreach (var el in emb1)
                     {
-                        if(sub[i,j]==1)
-                        {
-                            Min[i, j] = sub[i, j];
-                        }                      
+                        Min[el.v1, el.v2] = 1;
+                        Min[el.v2, el.v1] = 1;
                     }
                 }
-            }
+                for (int i = 0; i < sub.Size; i++)
+                {
+                    for (int j = 0; j < sub.Size; j++)
+                    {
+                        if (sub[i, j] == 1)
+                        {
+                            Min[i, j] = sub[i, j];
+                        }
+                    }
+                }
+            counter += 1;
+        }
             return new Graph(Min);
         }
 

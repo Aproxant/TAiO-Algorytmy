@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCS_McGreg", "MCS_McGreg\MC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Max_McGreg", "Max_McGreg\Max_McGreg.csproj", "{9C3CC8A2-D63F-4EE0-A339-25B3B200FFE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrutForce", "BrutForce\BrutForce.csproj", "{BA877FBB-0DD1-4045-818B-01CD4184C71F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9C3CC8A2-D63F-4EE0-A339-25B3B200FFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C3CC8A2-D63F-4EE0-A339-25B3B200FFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C3CC8A2-D63F-4EE0-A339-25B3B200FFE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA877FBB-0DD1-4045-818B-01CD4184C71F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA877FBB-0DD1-4045-818B-01CD4184C71F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA877FBB-0DD1-4045-818B-01CD4184C71F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA877FBB-0DD1-4045-818B-01CD4184C71F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
