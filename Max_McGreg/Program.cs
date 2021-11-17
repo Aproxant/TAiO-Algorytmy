@@ -44,22 +44,31 @@ namespace MAX_McGreg
             int v1 = -1;
             bool selected = false;
             bool contains = false;
-            if (s.correspondingVerticles.Count - s.countOfNullNodes != 0)
+
+            if (!(s.correspondingVerticles.Count - s.countOfNullNodes != 0))
             {
-                //find first adjacent vertex
+                for (int i = 0; i < s.G1.GetLength(0); i++)
+                {
+                    contains = checkUsed(s, i);
+                    if (!contains)
+                    {
+                        v1 = i;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                //wez sasiada pierwszego lepszego
                 foreach (var el in s.correspondingVerticles)
                 {
                     if (el.Item2 == -1) continue;
                     for (int i = 0; i < s.G1.GetLength(0); i++)
                     {
-                        if (s.G1[i, el.Item1] == 1)
+                        //jesli jest polaczenie w g1
+                        if (isConnectedG1(s, i, el))
                         {
-                            foreach (var el2 in s.correspondingVerticles)
-                                if (el2.Item1 == i)
-                                {
-                                    contains = true;
-                                    break;
-                                }
+                            contains = checkUsed(s, i);
                             if (!contains)
                             {
                                 selected = true;
@@ -76,48 +85,58 @@ namespace MAX_McGreg
                         break;
                 }
             }
-            else
-            {
-
-                for (int i = 0; i < s.G1.GetLength(0); i++)
-                {
-                    foreach (var el in s.correspondingVerticles)
-                        if (el.Item1 == i)
-                        {
-                            contains = true;
-                            break;
-                        }
-                    if (!contains)
-                    {
-                        v1 = i;
-                        break;
-                    }
-                    contains = false;
-                }
-            }
             return v1;
         }
+
+        public static bool isConnectedG1(State s, int i, (int, int) el)
+        {
+            if (s.G1[i, el.Item1] == 1)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool isConnectedG2(State s, int i, (int,int) el)
+        {
+            if (s.G2[i, el.Item1] == 1)
+                return true;
+            else
+                return false;
+        }
+
+        //bierz pierwszy, rozbic na funkcje (foreache) 
         public static IEnumerable<Tuple<int, int>> nextPair(State s, int v1)
         {
 
             bool used = false;
             for (int i = 0; i < s.G2.GetLength(0); i++)
             {
-                foreach (var el in s.correspondingVerticles)
-                    if (el.Item2 == i) //used
-                    {
-                        used = true;
-                        break;
-                    }
+                //patrz czy wierzcholek z G2 juz sparowany wczesniej
+                used = checkUsed(s, i);
+                // jesli nie to sparuj go razem z v1
                 if (!used)
                 {
                     yield return new Tuple<int, int>(v1, i);
                 }
-                used = false;
+
 
             }
             yield return null;
         }
+
+
+        public static bool checkUsed(State s, int i)
+        {
+            foreach (var el in s.correspondingVerticles)
+            {
+                if (el.Item2 == i)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
 
     }
 }
