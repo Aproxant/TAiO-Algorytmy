@@ -10,10 +10,14 @@ namespace Program
         {
             if (args.Length != 2)
             {
-                Console.WriteLine("Pass two arguments graph1 file and graph 2 file as absolute path");
+                args = new String[2];
+                Console.WriteLine("Input first file path\n");
+                  args[0] = Console.ReadLine();
+                Console.WriteLine("Input second file path\n");
+                args[1] = Console.ReadLine();
+
             }
-            else
-            {
+           
                 try
                 {
                     bool flag = true;
@@ -35,7 +39,8 @@ namespace Program
                                 {
                                     case 'a':
                                         MaxMcgregor.Run(args);
-                                        break;
+                                    Environment.Exit(0);
+                                    break;
                                     case 'b':
                                         MaxMcgregor.Run(args);
                                         break;
@@ -72,7 +77,7 @@ namespace Program
                     Console.WriteLine("Press any key to exit.");
                     Console.ReadKey();
                 }
-            }
+            
 
 
         }

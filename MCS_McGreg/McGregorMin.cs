@@ -11,7 +11,7 @@ namespace MCS_McGreg
 {
   public class McGregorMin
     {
-        static void Main()
+        static void TEST()
         {
             DateTime dt = DateTime.Now;
 

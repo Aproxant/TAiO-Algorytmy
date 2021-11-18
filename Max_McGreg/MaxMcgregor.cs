@@ -8,9 +8,9 @@ using TAiO_Algorytmy;
 
 namespace MAX_McGreg
 {
-  public  class MaxMcgregor
+  public class MaxMcgregor
     {
-        public static void Main()
+        public  void Test()
         {
             DateTime dt = DateTime.Now;
 
@@ -26,6 +26,7 @@ namespace MAX_McGreg
             State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix);
             //MyState s = new MyState(G1, G2);
             Console.Write("V+E Solution\n");
+            Console.WriteLine(s);
             McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s);
 
             ///Algorithm.McGregor(new MyState(G1, G2), ref s);
@@ -35,12 +36,14 @@ namespace MAX_McGreg
         public static void Run(String[] args)
         {
             string file1 = args[0];
-            string file2 = args[1];
-            var G1 = GraphLoader.LoadGraph(file1, "G1");
-            var G2 = GraphLoader.LoadGraph(file2, "G2");
+        
+            ( Graph G1, Graph G2) = GraphLoader.SingleFileGraphLoader(file1, "g");
+            Console.WriteLine("Processing graph...");
             State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix);
             Console.Write("V+E Solution\n");
             McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s);
+            Console.WriteLine(s);
+
         }
 
         public static bool LeafOfSearchTree(State s)

@@ -9,7 +9,7 @@ namespace BrutForce
 {
     class Program
     {
-        static void Main(string[] args)
+        static void RES(string[] args)
         {
             var k = new PermutationGenerator(5);
         }
