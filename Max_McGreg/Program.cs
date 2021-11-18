@@ -49,7 +49,7 @@ namespace MAX_McGreg
             {
                 for (int i = 0; i < s.G1.GetLength(0); i++)
                 {
-                    contains = checkUsed(s, i);
+                    contains = checkUsed(s, i, 1);
                     if (!contains)
                     {
                         v1 = i;
@@ -68,7 +68,7 @@ namespace MAX_McGreg
                         //jesli jest polaczenie w g1
                         if (isConnectedG1(s, i, el))
                         {
-                            contains = checkUsed(s, i);
+                            contains = checkUsed(s, i, 1);
                             if (!contains)
                             {
                                 selected = true;
@@ -112,7 +112,7 @@ namespace MAX_McGreg
             for (int i = 0; i < s.G2.GetLength(0); i++)
             {
                 //patrz czy wierzcholek z G2 juz sparowany wczesniej
-                used = checkUsed(s, i);
+                used = checkUsed(s, i, 2);
                 // jesli nie to sparuj go razem z v1
                 if (!used)
                 {
@@ -125,13 +125,23 @@ namespace MAX_McGreg
         }
 
 
-        public static bool checkUsed(State s, int i)
+        public static bool checkUsed(State s, int i, int graph)
         {
             foreach (var el in s.correspondingVerticles)
             {
-                if (el.Item2 == i)
+                if (graph == 1)
                 {
-                    return true;
+                    if (el.Item1 == i)
+                    {
+                        return true;
+                    }                  
+                }
+                else
+                {
+                    if (el.Item2 == i)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
