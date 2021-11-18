@@ -40,7 +40,7 @@ namespace MAX_McGreg
         
             ( Graph G1, Graph G2) = GraphLoader.SingleFileGraphLoader(file1, "g");
             Console.WriteLine("Processing graph...");
-            State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix);
+            State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix); //bug
             Console.Write("V+E Solution\n");
             McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s, false);
             Console.WriteLine(s);

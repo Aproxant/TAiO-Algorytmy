@@ -91,7 +91,7 @@ namespace TAiO_Algorytmy
                     int[,] matrix = generateGraph(graph1Lines);
                     Graph graph1 = new Graph(matrix, name);
                     int[,] matrix2 = generateGraph(graph2Lines);
-                    Graph graph2 = new Graph(matrix, name);
+                    Graph graph2 = new Graph(matrix2, "G2");
                     return (graph1, graph2);
                 }
                 else
