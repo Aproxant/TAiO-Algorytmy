@@ -30,7 +30,7 @@ namespace MCS_McGreg
 
             Console.WriteLine(G2);
             Console.WriteLine("V+E Solution\n");
-            McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s);
+            McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s,false);
 
             //Graph Min = new Graph(s.G1);
 
@@ -40,20 +40,18 @@ namespace MCS_McGreg
             
 
         }
-        public static void Run(String[] args)
+        public static void Run(String[] args, bool approx)
         {
             string file1 = args[0];
-            string file2 = args[1];
-  
-            var G1 = GraphLoader.LoadGraph(file1, "G1");
-            var G2 = GraphLoader.LoadGraph(file2, "G2");
+
+            (var G1,var G2) = GraphLoader.SingleFileGraphLoader(file1, "G");
+            
             State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix);
 
             Console.WriteLine(G1);
-
             Console.WriteLine(G2);
             Console.WriteLine("V+E Solution\n");
-            McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s);
+            McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s,approx);
 
             //Graph Min = new Graph(s.G1);
 

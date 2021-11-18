@@ -1,6 +1,8 @@
 ﻿using System;
+using BrutForce;
 using MAX_McGreg;
 using MCS_McGreg;
+using TAiO_Algorytmy;
 
 namespace Program
 {
@@ -13,8 +15,6 @@ namespace Program
                 args = new String[2];
                 Console.WriteLine("Input first file path\n");
                   args[0] = Console.ReadLine();
-                Console.WriteLine("Input second file path\n");
-                args[1] = Console.ReadLine();
 
             }
            
@@ -26,7 +26,9 @@ namespace Program
                         Console.WriteLine("Choose algorithm to execute");
                         Console.WriteLine("1 - Maximum common subgraph");
                         Console.WriteLine("2 - Minimum common supergraph");
-                        Console.WriteLine("9 - Quit the application");
+                        Console.WriteLine("3 - Bruteforce");
+
+                         Console.WriteLine("9 - Quit the application");
                         char key = Console.ReadKey().KeyChar;
                         Console.WriteLine();
                         switch (key)
@@ -38,14 +40,14 @@ namespace Program
                                 switch (val1)
                                 {
                                     case 'a':
-                                        MaxMcgregor.Run(args);
-                                    Environment.Exit(0);
+                                    MaxMcgregor.RunExact(args);
+                                      Environment.Exit(0);
                                     break;
                                     case 'b':
-                                        MaxMcgregor.Run(args);
+                                    MaxMcgregor.RunApprox(args);
                                         break;
                                 }
-                                MaxMcgregor.Run(args);
+                               
                                 break;
                             case '2':
                                 Console.WriteLine("a - Exact algorithm");
@@ -54,14 +56,18 @@ namespace Program
                                 switch (val2)
                                 {
                                     case 'a':
-                                        McGregorMin.Run(args);
+                                    McGregorMin.Run(args, false);
                                         break;
                                     case 'b':
-                                        McGregorMin.Run(args);
+                                    McGregorMin.Run(args, true);
                                         break;
                                 }
                                 break;
-                            case '9':
+                           case '3':
+                            (var G1, var G2) = GraphLoader.SingleFileGraphLoader(args[0], "G");
+                       //       BruttForce.MyBrutForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+                            break;
+                        case '9':
                                 flag = false;
                                 Console.WriteLine();
                                 break;
