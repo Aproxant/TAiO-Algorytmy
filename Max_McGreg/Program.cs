@@ -8,9 +8,9 @@ using TAiO_Algorytmy;
 
 namespace MAX_McGreg
 {
-    class Program
+  public  class MaxMcgregor
     {
-        static void Main()
+        public static void Main()
         {
             DateTime dt = DateTime.Now;
 
@@ -19,10 +19,10 @@ namespace MAX_McGreg
             string file2 = "4_4_B_Hartman.csv";
             DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
             dir = dir.Parent.Parent.Parent;
-            string path1 = Path.Combine(dir.FullName, @"Examples\", file1);
-            string path2 = Path.Combine(dir.FullName, @"Examples\", file2);
-            var G1 = GraphLoader.LoadGraph(path1);
-            var G2 = GraphLoader.LoadGraph(path2);
+            string path1 = Path.Combine(dir.FullName, @"Examples/", file1);
+            string path2 = Path.Combine(dir.FullName, @"Examples/", file2);
+            var G1 = GraphLoader.LoadGraph(path1, "G1");
+            var G2 = GraphLoader.LoadGraph(path2, "G2");
             State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix);
             //MyState s = new MyState(G1, G2);
             Console.Write("V+E Solution\n");
@@ -31,6 +31,16 @@ namespace MAX_McGreg
             ///Algorithm.McGregor(new MyState(G1, G2), ref s);
 
 
+        }
+        public static void Run(String[] args)
+        {
+            string file1 = args[0];
+            string file2 = args[1];
+            var G1 = GraphLoader.LoadGraph(file1, "G1");
+            var G2 = GraphLoader.LoadGraph(file2, "G2");
+            State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix);
+            Console.Write("V+E Solution\n");
+            McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s);
         }
 
         public static bool LeafOfSearchTree(State s)

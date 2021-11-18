@@ -12,14 +12,14 @@ namespace MAX_McGreg
         public static void McGregor(State s, ref State max)
         {
             int count = 0;
-            int v1 = Program.firstNeighbour(s);
+            int v1 = MaxMcgregor.firstNeighbour(s);
             
             if (v1 != -1)
                 findPair(s, v1, ref count, ref max);
 
             //case with null node
             s.AddNewPair(v1, -1, 0);
-            if (!Program.LeafOfSearchTree(s))
+            if (!MaxMcgregor.LeafOfSearchTree(s))
                 McGregor(s, ref max);
             s.Backtrack(0);
         }
@@ -27,7 +27,7 @@ namespace MAX_McGreg
 
         private static void findPair(State s, int v1, ref int count, ref State max)
         {
-            foreach (var pair in Program.nextPair(s, v1))
+            foreach (var pair in MaxMcgregor.nextPair(s, v1))
             {
                 if (pair == null) break;
                 v1 = pair.Item1;
@@ -38,7 +38,7 @@ namespace MAX_McGreg
                     s.AddNewPair(pair.Item1, pair.Item2, count);
 
                     checkMax(s, ref max);
-                    if (!Program.LeafOfSearchTree(s)) //&& !PruningCondition(s, max))
+                    if (!MaxMcgregor.LeafOfSearchTree(s)) //&& !PruningCondition(s, max))
                         McGregor(s, ref max);
 
 

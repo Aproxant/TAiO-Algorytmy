@@ -1,13 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0125B1CF-115D-4F93-8F1D-C143772F73CC}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>MCS_McGreg</RootNamespace>
-    <AssemblyName>MCS_McGreg</AssemblyName>
+    <ProjectGuid>{63CAACDB-2426-46AA-A3D1-1F108299B345}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Program</RootNamespace>
+    <AssemblyName>Program Algorytmy</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -40,17 +40,23 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="McGregorMin.cs" />
-    <Compile Include="MinimumFunctions.cs" />
+    <Compile Include="Program.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Max_McGreg\Max_McGreg.csproj">
-      <Project>{9c3cc8a2-d63f-4ee0-a339-25b3b200ffe5}</Project>
+      <Project>{9C3CC8A2-D63F-4EE0-A339-25B3B200FFE5}</Project>
       <Name>Max_McGreg</Name>
     </ProjectReference>
-    <ProjectReference Include="..\TAiO Algorytmy\TAiO Algorytmy.csproj">
-      <Project>{63caacdb-2426-46aa-a3d1-1f108299b345}</Project>
-      <Name>TAiO Algorytmy</Name>
+    <ProjectReference Include="..\MCS_McGreg\MCS_McGreg.csproj">
+      <Project>{0125B1CF-115D-4F93-8F1D-C143772F73CC}</Project>
+      <Name>MCS_McGreg</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BrutForce\BrutForce.csproj">
+      <Project>{BA877FBB-0DD1-4045-818B-01CD4184C71F}</Project>
+      <Name>BrutForce</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

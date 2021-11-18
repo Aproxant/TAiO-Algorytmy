@@ -15,6 +15,7 @@ namespace TAiO_Algorytmy
         }
         public int Size => _adjacencyMatrix.GetLength(0);
         private int[,] _adjacencyMatrix;
+        private string _graphName;
 
         public int[,] AdjacencyMatrix
         {
@@ -35,6 +36,17 @@ namespace TAiO_Algorytmy
             for (var i = 0; i < Size; i++)
                 for (var j = 0; j < i; j++)
                     if (_adjacencyMatrix[i, j]==1)
+                        Edges.Add(new Edge(i, j));
+        }
+        public Graph(int[,] matrix, string name)
+        {
+            this._graphName = name;
+            if (!IsAdjacencyMatrixCorrect(matrix))
+                throw new ArgumentException("Invalid input matrix");
+            _adjacencyMatrix = matrix;
+            for (var i = 0; i < Size; i++)
+                for (var j = 0; j < i; j++)
+                    if (_adjacencyMatrix[i, j] == 1)
                         Edges.Add(new Edge(i, j));
         }
         public Graph(int size)
@@ -63,17 +75,19 @@ namespace TAiO_Algorytmy
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            
-            sb.Append("Verticles from Graph: ");
+            if(this._graphName!=null)
+                sb.Append($"Verticles from Graph {this._graphName}:\n");
+            else
+                sb.Append("Verticles from Graph:\n");
             for (int i = 0; i < Size; i++)
             {
                 for (int j = 0; j < Size; j++)
                 {
-                        Console.Write(AdjacencyMatrix[i, j] + " ");
+                        sb.Append(AdjacencyMatrix[i, j] + " ");
                 }
-                Console.Write("\n");
+                sb.Append("\n");
             }
-            Console.Write("\n");
+            sb.Append("\n");
     
             return sb.ToString();
         }

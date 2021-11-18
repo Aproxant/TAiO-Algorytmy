@@ -9,7 +9,7 @@ namespace TAiO_Algorytmy
 {
     public static class GraphLoader
     {
-        public static Graph LoadGraph(string pathToFile)
+        public static Graph LoadGraph(string pathToFile, string name)
         {
             if (!File.Exists(pathToFile))
             {
@@ -46,7 +46,7 @@ namespace TAiO_Algorytmy
 
                         }
                     }
-                    return new Graph(matrix);
+                    return new Graph(matrix, name);
                 }
                 else
                 {
