@@ -27,13 +27,14 @@ namespace MAX_McGreg
             //MyState s = new MyState(G1, G2);
             Console.Write("V+E Solution\n");
             Console.WriteLine(s);
-            McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s);
+            McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s, true);
 
             ///Algorithm.McGregor(new MyState(G1, G2), ref s);
 
 
         }
-        public static void Run(String[] args)
+
+        public static void RunExact(String[] args)
         {
             string file1 = args[0];
         
@@ -41,7 +42,20 @@ namespace MAX_McGreg
             Console.WriteLine("Processing graph...");
             State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix);
             Console.Write("V+E Solution\n");
-            McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s);
+            McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s, false);
+            Console.WriteLine(s);
+
+        }
+
+        public static void RunApprox(String[] args)
+        {
+            string file1 = args[0];
+
+            (Graph G1, Graph G2) = GraphLoader.SingleFileGraphLoader(file1, "g");
+            Console.WriteLine("Processing graph...");
+            State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix);
+            Console.Write("V+E Solution\n");
+            McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s, true);
             Console.WriteLine(s);
 
         }

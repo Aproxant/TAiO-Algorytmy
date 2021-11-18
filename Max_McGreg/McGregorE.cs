@@ -9,23 +9,35 @@ namespace MAX_McGreg
 {
     public class McGregorE
     {
-        public static void McGregor(State s, ref State max)
+        public static void McGregor(State s, ref State max, bool approximate)
         {
             int count = 0;
             int v1 = MaxMcgregor.firstNeighbour(s);
             
             if (v1 != -1)
-                findPair(s, v1, ref count, ref max);
+                findPair(s, v1, ref count, ref max, approximate);
 
             //case with null node
             s.AddNewPair(v1, -1, 0);
-            if (!MaxMcgregor.LeafOfSearchTree(s))
-                McGregor(s, ref max);
+
+            if (approximate)
+            {
+                if (!MaxMcgregor.LeafOfSearchTree(s) && PruningCondition(s, max))
+                    McGregor(s, ref max, approximate);
+            }
+            else
+            {
+                if (!MaxMcgregor.LeafOfSearchTree(s))
+                    McGregor(s, ref max, approximate);
+            }
+
+           
+
             s.Backtrack(0);
         }
 
 
-        private static void findPair(State s, int v1, ref int count, ref State max)
+        private static void findPair(State s, int v1, ref int count, ref State max, bool approximate)
         {
             foreach (var pair in MaxMcgregor.nextPair(s, v1))
             {
@@ -39,7 +51,7 @@ namespace MAX_McGreg
 
                     checkMax(s, ref max);
                     if (!MaxMcgregor.LeafOfSearchTree(s)) //&& !PruningCondition(s, max))
-                        McGregor(s, ref max);
+                        McGregor(s, ref max, approximate);
 
 
                     //revert to previous state
@@ -51,6 +63,11 @@ namespace MAX_McGreg
             }
         }
 
+        private static bool PruningCondition(State s, State max)
+        {
+            int limit = s.G1.GetLength(0);
+            return limit - s.countOfNullNodes <= max.correspondingVerticles.Count - max.countOfNullNodes;
+        }
 
         private static bool isFeasiblePair(State s, Tuple<int, int> pair, ref int countOfEdges)
         {
