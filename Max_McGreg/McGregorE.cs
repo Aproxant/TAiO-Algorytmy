@@ -22,7 +22,7 @@ namespace MAX_McGreg
 
             if (approximate)
             {
-                if (!MaxMcgregor.LeafOfSearchTree(s) && PruningCondition(s, max))
+                if (!MaxMcgregor.LeafOfSearchTree(s) && !PruningCondition(s, max))
                     McGregor(s, ref max, approximate);
             }
             else
@@ -50,8 +50,16 @@ namespace MAX_McGreg
                     s.AddNewPair(pair.Item1, pair.Item2, count);
 
                     checkMax(s, ref max);
-                    if (!MaxMcgregor.LeafOfSearchTree(s)) //&& !PruningCondition(s, max))
-                        McGregor(s, ref max, approximate);
+                    if (approximate)
+                    {
+                        if (!MaxMcgregor.LeafOfSearchTree(s) && !PruningCondition(s, max))
+                            McGregor(s, ref max, approximate);
+                    }
+                    else
+                    {
+                        if (!MaxMcgregor.LeafOfSearchTree(s))
+                            McGregor(s, ref max, approximate);
+                    }
 
 
                     //revert to previous state

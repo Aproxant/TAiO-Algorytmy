@@ -55,8 +55,23 @@ namespace MAX_McGreg
             correspondingVerticles.Add((n1, n2));
         }
 
+        public Graph TransformGraph()
+        {
+            int[,] G1 = new int[this.correspondingVerticles.Count, this.correspondingVerticles.Count];
+
+            foreach (var el in this.correspondingEdges)
+            {
+                G1[el.Item1.v1, el.Item1.v2] = 1;
+                G1[el.Item1.v2, el.Item1.v1] = 1;
+            }
+            return new Graph(G1);
+        }
+
         public override string ToString()
         {
+            Graph gx = TransformGraph();
+            Console.Write(gx);
+
             foreach (var el in correspondingEdges)
             {
                 G1[el.Item1.v1, el.Item1.v2] = 2;
@@ -79,44 +94,7 @@ namespace MAX_McGreg
             sb.AppendLine(sb1.ToString());
             sb.AppendLine(sb2.ToString());
 
-            for (int i = 0; i < G1.GetLength(0); i++)
-            {
-                for (int j = 0; j < G1.GetLength(0); j++)
-                {
-                    if (G1[i, j] == 2)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.BackgroundColor = ConsoleColor.White;
-                        Console.Write("1");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.Write(" ");
-                    }
-                    else
-                        Console.Write(G1[i, j] + " ");
-                }
-                Console.Write("\n");
-            }
-            Console.Write("\n");
-            for (int i = 0; i < G2.GetLength(0); i++)
-            {
-                for (int j = 0; j < G2.GetLength(0); j++)
-                {
-
-                    if (G2[i, j] == 2)
-                    {
-                        Console.ForegroundColor = ConsoleColor.Black;
-                        Console.BackgroundColor = ConsoleColor.White;
-                        Console.Write("1");
-                        Console.ForegroundColor = ConsoleColor.White;
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.Write(" ");
-                    }
-                    else
-                        Console.Write(G2[i, j] + " ");
-                }
-                Console.Write("\n");
-            }
+            
             return sb.ToString();
         }
 
