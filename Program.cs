@@ -94,7 +94,7 @@ namespace Program
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
                 Console.WriteLine("Press any key to exit.");
                 Console.ReadKey();
             }
