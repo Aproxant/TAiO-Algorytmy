@@ -14,76 +14,91 @@ namespace Program
             {
                 args = new String[2];
                 Console.WriteLine("Input first file path\n");
-                  args[0] = Console.ReadLine();
+                args[0] = Console.ReadLine();
 
             }
-           
-                try
-                {
-                    bool flag = true;
-                    while (flag)
-                    {
-                        Console.WriteLine("Choose algorithm to execute");
-                        Console.WriteLine("1 - Maximum common subgraph");
-                        Console.WriteLine("2 - Minimum common supergraph");
-                        Console.WriteLine("3 - Bruteforce");
 
-                         Console.WriteLine("9 - Quit the application");
-                        char key = Console.ReadKey().KeyChar;
-                        Console.WriteLine();
-                        switch (key)
-                        {
-                            case '1':
-                                Console.WriteLine("a - Exact algorithm");
-                                Console.WriteLine("b - Approximate algorithm");
-                                char val1 = Console.ReadKey().KeyChar;
-                                switch (val1)
-                                {
-                                    case 'a':
+            try
+            {
+                bool flag = true;
+                while (flag)
+                {
+                    Console.WriteLine("Choose algorithm to execute");
+                    Console.WriteLine("1 - Maximum common subgraph");
+                    Console.WriteLine("2 - Minimum common supergraph");
+                    Console.WriteLine("3 - Bruteforce");
+
+                    Console.WriteLine("9 - Quit the application");
+                    char key = Console.ReadKey().KeyChar;
+                    Console.WriteLine();
+                    switch (key)
+                    {
+                        case '1':
+                            Console.WriteLine("a - Exact algorithm");
+                            Console.WriteLine("b - Approximate algorithm");
+                            char val1 = Console.ReadKey().KeyChar;
+                            switch (val1)
+                            {
+                                case 'a':
                                     MaxMcgregor.RunExact(args);
-                                      Environment.Exit(0);
                                     break;
-                                    case 'b':
+                                case 'b':
                                     MaxMcgregor.RunApprox(args);
-                                        break;
-                                }
-                               
-                                break;
-                            case '2':
-                                Console.WriteLine("a - Exact algorithm");
-                                Console.WriteLine("b - Approximate algorithm");
-                                char val2 = Console.ReadKey().KeyChar;
-                                switch (val2)
-                                {
-                                    case 'a':
+                                    break;
+                            }
+                            flag = false;
+                            break;
+                        case '2':
+                            Console.WriteLine("a - Exact algorithm");
+                            Console.WriteLine("b - Approximate algorithm");
+                            char val2 = Console.ReadKey().KeyChar;
+                            switch (val2)
+                            {
+                                case 'a':
                                     McGregorMin.Run(args, false);
-                                        break;
-                                    case 'b':
+                                    break;
+                                case 'b':
                                     McGregorMin.Run(args, true);
-                                        break;
-                                }
-                                break;
-                           case '3':
+                                    break;
+                            }
+                            flag = false;
+                            break;
+                        case '3':
                             (var G1, var G2) = GraphLoader.SingleFileGraphLoader(args[0], "G");
-                       //       BruttForce.MyBrutForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+                            Console.WriteLine("a - Exact algorithm");
+                            Console.WriteLine("b - Approximate algorithm");
+                            char val3 = Console.ReadKey().KeyChar;
+                            switch (val3)
+                            {
+                                case 'a':
+                                    var biggestSubExact = BruttForce.MyBrutForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix), false);
+                                    Console.WriteLine(biggestSubExact);
+                                    break;
+                                case 'b':
+                                    var biggestSubAprox = BruttForce.MyBrutForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix), true);
+                                    Console.WriteLine(biggestSubAprox);
+
+                                    break;
+                            }
+                            flag = false;
                             break;
                         case '9':
-                                flag = false;
-                                Console.WriteLine();
-                                break;
-                            default:
-                                Console.WriteLine("\nInvalid option selected.\n");
-                                break;
-                        }
+                            flag = false;
+                            Console.WriteLine();
+                            break;
+                        default:
+                            Console.WriteLine("\nInvalid option selected.\n");
+                            break;
                     }
                 }
-                catch (Exception ex)
-                {
+            }
+            catch (Exception ex)
+            {
 
-                    Console.WriteLine("Press any key to exit.");
-                    Console.ReadKey();
-                }
-            
+                Console.WriteLine("Press any key to exit.");
+                Console.ReadKey();
+            }
+
 
 
         }
