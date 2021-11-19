@@ -23,7 +23,13 @@ namespace MCS_McGreg
         }
         public static Graph GenerateSuperGraph(List<Graph> graphs, List<Edge> emb1, List<Edge> emb2)
         {
-            int[,] Min = new int[graphs[1].Size, graphs[1].Size];
+            int[,] Min;
+            if (graphs[0].Size>=graphs[1].Size && graphs[0].Size>=graphs[2].Size)
+                Min = new int[graphs[0].Size, graphs[0].Size];
+            else if(graphs[1].Size >= graphs[0].Size && graphs[1].Size >= graphs[2].Size)
+                Min = new int[graphs[0].Size, graphs[0].Size];
+            else
+                Min = new int[graphs[2].Size, graphs[2].Size];
             int counter = 0;
             foreach (var sub in graphs)
             {
@@ -84,11 +90,11 @@ namespace MCS_McGreg
         {
             int[,] mat = G1.AdjacencyMatrix.Clone() as int[,];
 
-            for(int i=0;i<G1.Size;i++)
+            for(int i=0;i<G1.Size&& i < G2.Size; i++)
             {
-                for(int j=0;j<G2.Size;j++)
+                for(int j=0;j<G2.Size&&j<G1.Size;j++)
                 {
-                    if (G1.AdjacencyMatrix[i,j] == G2.AdjacencyMatrix[i,j] && G1.AdjacencyMatrix[j,i] == G2.AdjacencyMatrix[j,i])
+                    if (G1.AdjacencyMatrix[i,j] == G2.AdjacencyMatrix[i,j])
                     {
                         mat[i, j] = 0;
                     }
