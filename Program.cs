@@ -17,9 +17,12 @@ namespace Program
                 args[0] = Console.ReadLine();
 
             }
-
+           
             try
             {
+                (var G1, var G2) = GraphLoader.SingleFileGraphLoader(args[0], "G");
+                Console.WriteLine(G1);
+                Console.WriteLine(G2);
                 bool flag = true;
                 while (flag)
                 {
@@ -31,6 +34,7 @@ namespace Program
                     Console.WriteLine("9 - Quit the application");
                     char key = Console.ReadKey().KeyChar;
                     Console.WriteLine();
+                
                     switch (key)
                     {
                         case '1':
@@ -46,7 +50,6 @@ namespace Program
                                     MaxMcgregor.RunApprox(args);
                                     break;
                             }
-                            flag = false;
                             break;
                         case '2':
                             Console.WriteLine("a - Exact algorithm");
@@ -61,10 +64,8 @@ namespace Program
                                     McGregorMin.Run(args, true);
                                     break;
                             }
-                            flag = false;
                             break;
                         case '3':
-                            (var G1, var G2) = GraphLoader.SingleFileGraphLoader(args[0], "G");
                             Console.WriteLine("a - Exact algorithm");
                             Console.WriteLine("b - Approximate algorithm");
                             char val3 = Console.ReadKey().KeyChar;
@@ -80,7 +81,6 @@ namespace Program
 
                                     break;
                             }
-                            flag = false;
                             break;
                         case '9':
                             flag = false;
