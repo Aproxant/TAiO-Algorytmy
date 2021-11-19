@@ -21,7 +21,7 @@ namespace BrutForce
         public AdjacencyMatrix(int[,] graph)
         {
             var len = graph.GetLength(0);
-            var matrix = new int[len][];
+            matrix = new int[len][];
             for(int i = 0; i < len; i++)
             {
                 matrix[i] = new int[len];
@@ -30,9 +30,6 @@ namespace BrutForce
                     matrix[i][y] = graph[i, y];
                 }
             }
-            
-
-            InitializeMatrix(matrix);
             Size = matrix.Length;
             EdgeNumber = matrix.SelectMany(item => item).Sum();
         }
@@ -42,7 +39,8 @@ namespace BrutForce
             int[][] graphcopy = new int[graph.Length][];
             for (int i = 0; i < graph.Length; i++)
             {
-                graph[i].CopyTo(new int[graph.Length], 0);
+                graphcopy[i] = new int[graph.Length];
+                graph[i].CopyTo(graphcopy[i], 0);
             }
 
             matrix = graphcopy;
