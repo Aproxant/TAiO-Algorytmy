@@ -18,6 +18,12 @@ namespace BrutForce
             Size = graph.Length;
             EdgeNumber = matrix.SelectMany(item => item).Sum();
         }
+
+        public void UpdateEdges()
+        {
+            this.EdgeNumber = matrix.SelectMany(item => item).Sum();
+        }
+
         public AdjacencyMatrix(int[,] graph)
         {
             var len = graph.GetLength(0);

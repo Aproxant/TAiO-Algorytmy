@@ -36,6 +36,11 @@ namespace BrutForce
                     {
                         AdjacencyMatrix subMatrix = M.GetSubMatrix(x, y, B.Size);
                         AdjacencyMatrix commonMatrix =CommonMatrix(subMatrix, B);
+                        commonMatrix.UpdateEdges();
+                        if (commonMatrix.EdgeNumber == 9)
+                        {
+                            break;
+                        }
                         if (commonMatrix.EdgeNumber > maxCommonEdges)
                         {
                             maxCommonEdges = commonMatrix.EdgeNumber;
