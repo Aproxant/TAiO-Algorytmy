@@ -17,7 +17,7 @@ namespace Program
                 args[0] = Console.ReadLine();
 
             }
-           
+
             try
             {
                 (var G1, var G2) = GraphLoader.SingleFileGraphLoader(args[0], "G");
@@ -76,10 +76,12 @@ namespace Program
                             switch (val2)
                             {
                                 case 'a':
-                                    var minGraphExact = MinimumFunctions.MinimumSuperGraph(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+                                    var minGraphExact = MinimumFunctions.MinimumSuperGraph(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix),false);
+                                    Console.WriteLine(minGraphExact);
                                     break;
                                 case 'b':
-                                    McGregorMin.Run(args, true);
+                                    var minGraphApprox = MinimumFunctions.MinimumSuperGraph(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix), true);
+                                    Console.WriteLine(minGraphApprox); 
                                     break;
                             }
                             break;

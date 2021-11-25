@@ -130,8 +130,8 @@ namespace BrutForce
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-         
-           
+
+            sb.Append("\n");
                 sb.Append("Verticles from Graph:\n");
             for (int i = 0; i < Size; i++)
             {

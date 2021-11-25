@@ -11,7 +11,7 @@ namespace MCS_McGreg
 {
     public static class MinimumFunctions
     {
-        public static AdjacencyMatrix MinimumSuperGraph(AdjacencyMatrix G1, AdjacencyMatrix G2)
+        public static AdjacencyMatrix MinimumSuperGraph(AdjacencyMatrix G1, AdjacencyMatrix G2,bool appro)
         {
             if (G1.Size < G2.Size)
             {
@@ -19,17 +19,42 @@ namespace MCS_McGreg
                 G1 = G2;
                 G2 = tmp;
             }
-            AdjacencyMatrix Mcs = BruttForce.MyBrutForce(G1, G2);
+            AdjacencyMatrix Mcs;
+            if (appro)
+                Mcs = BruttForce.MyBrutForceApproximate(G1, G2);
+            else
+                Mcs = BruttForce.MyBrutForce(G1, G2);
 
             AdjacencyMatrix G1_mcs = SubstractionOfGraphs(G1, Mcs);
 
             AdjacencyMatrix G2_mcs = SubstractionOfGraphs(G2, Mcs);
 
-            AdjacencyMatrix Mcs_G1_emb=
-            List<Edge> k = FindSetOfEmbeddedEdges(Mcs, G1);
-            List<Edge> k2 = FindSetOfEmbeddedEdges(Mcs, G2);
-            List<Graph> subGraphs = new List<Graph> { Mcs, G1_mcs, G2_mcs };
-            return Mcs;
+            AdjacencyMatrix Mcs_G1_emb1 = FindSetOfEmbeddedEdges(Mcs, G1);
+            AdjacencyMatrix Mcs_G2_emb2 = FindSetOfEmbeddedEdges(Mcs, G2);
+            
+            List<AdjacencyMatrix> subGraphs = new List<AdjacencyMatrix> { Mcs, Mcs_G1_emb1, G1_mcs, Mcs_G2_emb2, G2_mcs };
+            return GenerateSuperGraph(subGraphs);
+        }
+        public static AdjacencyMatrix GenerateSuperGraph(List<AdjacencyMatrix> subGraphs)
+        {
+            int maxSize = 0;
+            foreach(var k in subGraphs)
+            {
+                if (maxSize < k.Size)
+                    maxSize = k.Size;
+            }
+            int[][] minGraph = new int[maxSize][];
+            for (int i = 0; i < maxSize; i++)
+                minGraph[i] = new int[maxSize];
+            foreach(AdjacencyMatrix sub in subGraphs)
+            {
+                for (int i = 0; i < sub.Size; i++)
+                    for (int j = 0; j < sub.Size; j++)
+                        if(sub.matrix[i][j]==1)
+                            minGraph[i][j] = sub.matrix[i][j];
+            }
+            return new AdjacencyMatrix(minGraph);
+            
         }
         public static AdjacencyMatrix SubstractionOfGraphs(AdjacencyMatrix G1, AdjacencyMatrix G2)
         {
@@ -43,67 +68,31 @@ namespace MCS_McGreg
                     {
                         mat[i][j] = 0;
                     }
-
                 }
             }
             return new AdjacencyMatrix(mat);
         }
         public static AdjacencyMatrix FindSetOfEmbeddedEdges(AdjacencyMatrix mcs, AdjacencyMatrix g2)
         {
-            int[][] emb = new int[g2.Size][];
-            for (int i = 0; i < emb.Length; i++)
-                emb[i] = new int[g2.Size];
-
-            for (int i = 0; i < g2.EdgeSize; i++)
+            int[][] emb = g2.matrix.Clone() as int[][];
+            for (int i = 0;i < mcs.Size; i++)
             {
-                if (i < mcs.EdgeSize)
+                for(int j=0; j<mcs.Size;j++)
                 {
-                    if (mcs[i].v1 != g2[i].v1 && mcs[i].v2 != g2[i].v2)
-                    {
-                        EmbeddedSet.Add(new Edge(mcs[i].v1, mcs[i].v2));
-                    }
+                     emb[i][j] = 0;
                 }
-                else
-                    break;
             }
-            return EmbeddedSet;
-        }
-
-        public static Graph GenerateSuperGraph(List<Graph> graphs, List<Edge> emb1, List<Edge> emb2)
-        {
-            int[,] Min;
-            if (graphs[0].Size>=graphs[1].Size && graphs[0].Size>=graphs[2].Size)
-                Min = new int[graphs[0].Size, graphs[0].Size];
-            else if(graphs[1].Size >= graphs[0].Size && graphs[1].Size >= graphs[2].Size)
-                Min = new int[graphs[0].Size, graphs[0].Size];
-            else
-                Min = new int[graphs[2].Size, graphs[2].Size];
-            int counter = 0;
-            foreach (var sub in graphs)
+            for (int i = mcs.Size; i < g2.Size; i++)
             {
+                for (int j = mcs.Size; j < g2.Size; j++)
+                {
+                    emb[i][j] = 0;
+                }
+            }
+            return new AdjacencyMatrix(emb);
+        }
 
-                if (counter == 2)
-                {
-                    foreach (var el in emb1)
-                    {
-                        Min[el.v1, el.v2] = 1;
-                        Min[el.v2, el.v1] = 1;
-                    }
-                }
-                for (int i = 0; i < sub.Size; i++)
-                {
-                    for (int j = 0; j < sub.Size; j++)
-                    {
-                        if (sub[i, j] == 1)
-                        {
-                            Min[i, j] = sub[i, j];
-                        }
-                    }
-                }
-            counter += 1;
-        }
-            return new Graph(Min);
-        }
+        
 
 
 
