@@ -37,7 +37,16 @@ namespace BrutForce
                 }
             }
             Size = matrix.Length;
-            EdgeNumber = matrix.SelectMany(item => item).Sum();
+            int counter = 0;
+            for(int i=0;i<Size;i++)
+            {
+                for(int j=0;j<Size;j++)
+                {
+                    if (matrix[i][j] == 1)
+                        counter++;
+                }
+            }
+            EdgeNumber = counter;
         }
         private void InitializeMatrix(int[][] graph)
         {

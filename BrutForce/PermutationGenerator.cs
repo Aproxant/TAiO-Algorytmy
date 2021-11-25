@@ -40,10 +40,10 @@ namespace BrutForce
             int counter = 0;
             int x = list.Length - 1;
 
-            GetPer(list, 0, x, ref counter);
+            GetPer(list, 0, x,ref counter);
         }
 
-        private  void GetPer(int[] list, int k, int m, ref int counter)
+        private  void GetPer(int[] list, int k, int m,ref int counter)
         {
             int[] copiedData = new int[list.Length];
             list.CopyTo(copiedData, 0);
