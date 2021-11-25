@@ -9,18 +9,13 @@ namespace BrutForce
 {
     static class BruttForce
     {
-        public static AdjacencyMatrix MyBrutForce(AdjacencyMatrix A, AdjacencyMatrix B,bool approximate)
+        public static AdjacencyMatrix MyBrutForce(AdjacencyMatrix A, AdjacencyMatrix B)
         {
             if (A.Size < B.Size)
             {
                 AdjacencyMatrix tmp = B;
                 B = A;
                 A = tmp;
-            }
-            if(approximate)
-            {
-                A.SortMatrix();
-                B.SortMatrix();
             }
             PermutationGenerator permu = new PermutationGenerator(A.Size);
 
@@ -37,15 +32,40 @@ namespace BrutForce
                         AdjacencyMatrix subMatrix = M.GetSubMatrix(x, y, B.Size);
                         AdjacencyMatrix commonMatrix =CommonMatrix(subMatrix, B);
                         commonMatrix.UpdateEdges();
-                        if (commonMatrix.EdgeNumber == 9)
-                        {
-                            break;
-                        }
                         if (commonMatrix.EdgeNumber > maxCommonEdges)
                         {
                             maxCommonEdges = commonMatrix.EdgeNumber;
                             biggestSubGraph = commonMatrix;
                         }
+                    }
+                }
+            }
+            return biggestSubGraph;
+        }
+
+        public static AdjacencyMatrix MyBrutForceApproximate(AdjacencyMatrix A, AdjacencyMatrix B)
+        {
+            if (A.Size < B.Size)
+            {
+                AdjacencyMatrix tmp = B;
+                B = A;
+                A = tmp;
+            }
+            A.SortMatrix();
+            B.SortMatrix();
+            AdjacencyMatrix biggestSubGraph = null;
+            int maxCommonEdges = 0;
+            for (int x = 0; x <= A.Size - B.Size; x++)
+            {
+                for (int y = 0; y <= A.Size - B.Size; y++)
+                {
+                    AdjacencyMatrix subMatrix = A.GetSubMatrix(x, y, B.Size);
+                    AdjacencyMatrix commonMatrix = CommonMatrix(subMatrix, B);
+                    commonMatrix.UpdateEdges();
+                    if (commonMatrix.EdgeNumber > maxCommonEdges)
+                    {
+                        maxCommonEdges = commonMatrix.EdgeNumber;
+                        biggestSubGraph = commonMatrix;
                     }
                 }
             }

@@ -27,9 +27,9 @@ namespace Program
                 while (flag)
                 {
                     Console.WriteLine("Choose algorithm to execute");
-                    Console.WriteLine("1 - Maximum common subgraph");
-                    Console.WriteLine("2 - Minimum common supergraph");
-                    Console.WriteLine("3 - Bruteforce");
+                    Console.WriteLine("1 - Maximum common subgraph (McGregor algorithm only for undirected graphs)");
+                    Console.WriteLine("2 - Maximum common subgraph (Brut Force algorithm)");
+                    Console.WriteLine("3 - Minimum common supergraph");
 
                     Console.WriteLine("9 - Quit the application");
                     char key = Console.ReadKey().KeyChar;
@@ -54,31 +54,32 @@ namespace Program
                         case '2':
                             Console.WriteLine("a - Exact algorithm");
                             Console.WriteLine("b - Approximate algorithm");
-                            char val2 = Console.ReadKey().KeyChar;
-                            switch (val2)
-                            {
-                                case 'a':
-                                    McGregorMin.Run(args, false);
-                                    break;
-                                case 'b':
-                                    McGregorMin.Run(args, true);
-                                    break;
-                            }
-                            break;
-                        case '3':
-                            Console.WriteLine("a - Exact algorithm");
-                            Console.WriteLine("b - Approximate algorithm");
                             char val3 = Console.ReadKey().KeyChar;
                             switch (val3)
                             {
                                 case 'a':
-                                    var biggestSubExact = BruttForce.MyBrutForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix), false);
+                                    var biggestSubExact = BruttForce.MyBrutForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
                                     Console.WriteLine(biggestSubExact);
                                     break;
                                 case 'b':
-                                    var biggestSubAprox = BruttForce.MyBrutForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix), true);
+                                    var biggestSubAprox = BruttForce.MyBrutForceApproximate(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
                                     Console.WriteLine(biggestSubAprox);
 
+                                    break;
+                            }
+                            break;
+                        case '3':
+
+                            Console.WriteLine("a - Exact algorithm");
+                            Console.WriteLine("b - Approximate algorithm");
+                            char val2 = Console.ReadKey().KeyChar;
+                            switch (val2)
+                            {
+                                case 'a':
+                                    var minGraphExact = MinimumFunctions.MinimumSuperGraph(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+                                    break;
+                                case 'b':
+                                    McGregorMin.Run(args, true);
                                     break;
                             }
                             break;

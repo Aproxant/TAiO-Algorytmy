@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrutForce
 {
-    class AdjacencyMatrix
+    public class AdjacencyMatrix
     {
         public int Size { get; set; }
 
@@ -116,6 +116,7 @@ namespace BrutForce
                 sum += matrix[x][n];
             }
             return sum;
+
         }
         public override string ToString()
         {

@@ -5,22 +5,70 @@ using System.Text;
 using System.Threading.Tasks;
 using MAX_McGreg;
 using TAiO_Algorytmy;
+using BrutForce;
 
 namespace MCS_McGreg
 {
     public static class MinimumFunctions
     {
-        public static Graph MinimumSuperGraph(State s,Graph G1,Graph G2)
+        public static AdjacencyMatrix MinimumSuperGraph(AdjacencyMatrix G1, AdjacencyMatrix G2)
         {
-            
-            Graph Mcs = TransformGraph(s);
-            Graph G1_mcs = SubstractionOfGraphs(G1, Mcs);
-            Graph G2_mcs = SubstractionOfGraphs(G2, Mcs);
+            if (G1.Size < G2.Size)
+            {
+                AdjacencyMatrix tmp = G1;
+                G1 = G2;
+                G2 = tmp;
+            }
+            AdjacencyMatrix Mcs = BruttForce.MyBrutForce(G1, G2);
+
+            AdjacencyMatrix G1_mcs = SubstractionOfGraphs(G1, Mcs);
+
+            AdjacencyMatrix G2_mcs = SubstractionOfGraphs(G2, Mcs);
+
+            AdjacencyMatrix Mcs_G1_emb=
             List<Edge> k = FindSetOfEmbeddedEdges(Mcs, G1);
             List<Edge> k2 = FindSetOfEmbeddedEdges(Mcs, G2);
             List<Graph> subGraphs = new List<Graph> { Mcs, G1_mcs, G2_mcs };
-            return GenerateSuperGraph(subGraphs,k,k2);
+            return Mcs;
         }
+        public static AdjacencyMatrix SubstractionOfGraphs(AdjacencyMatrix G1, AdjacencyMatrix G2)
+        {
+            int[][] mat = G1.matrix.Clone() as int[][];
+
+            for (int i = 0; i < G2.Size; i++)
+            {
+                for (int j = 0; j < G2.Size; j++)
+                {
+                    if (G1.matrix[i][j] == G2.matrix[i][j])
+                    {
+                        mat[i][j] = 0;
+                    }
+
+                }
+            }
+            return new AdjacencyMatrix(mat);
+        }
+        public static AdjacencyMatrix FindSetOfEmbeddedEdges(AdjacencyMatrix mcs, AdjacencyMatrix g2)
+        {
+            int[][] emb = new int[g2.Size][];
+            for (int i = 0; i < emb.Length; i++)
+                emb[i] = new int[g2.Size];
+
+            for (int i = 0; i < g2.EdgeSize; i++)
+            {
+                if (i < mcs.EdgeSize)
+                {
+                    if (mcs[i].v1 != g2[i].v1 && mcs[i].v2 != g2[i].v2)
+                    {
+                        EmbeddedSet.Add(new Edge(mcs[i].v1, mcs[i].v2));
+                    }
+                }
+                else
+                    break;
+            }
+            return EmbeddedSet;
+        }
+
         public static Graph GenerateSuperGraph(List<Graph> graphs, List<Edge> emb1, List<Edge> emb2)
         {
             int[,] Min;
@@ -57,51 +105,6 @@ namespace MCS_McGreg
             return new Graph(Min);
         }
 
-        public static Graph TransformGraph(State gr)
-        {
-            int[,] G1 = new int[gr.G1.GetLength(0), gr.G1.GetLength(1)];
-
-            foreach (var el in gr.correspondingEdges)
-            {
-                G1[el.Item1.v1, el.Item1.v2] = 1;
-                G1[el.Item1.v2, el.Item1.v1] = 1;
-            }
-            return new Graph(G1);
-        }
-
-        public static List<Edge> FindSetOfEmbeddedEdges(Graph mcs,Graph g2)
-        {
-            List<Edge> EmbeddedSet = new List<Edge>();
-            for(int i=0;i<g2.EdgeSize;i++)
-            {
-                if (i < mcs.EdgeSize)
-                {
-                    if (mcs[i].v1 != g2[i].v1 && mcs[i].v2 != g2[i].v2)
-                    {
-                        EmbeddedSet.Add(new Edge(mcs[i].v1, mcs[i].v2));
-                    }
-                }
-                else
-                    break;
-            }
-            return EmbeddedSet;
-        }
-        public static Graph SubstractionOfGraphs(Graph G1,Graph G2)
-        {
-            int[,] mat = G1.AdjacencyMatrix.Clone() as int[,];
-
-            for(int i=0;i<G1.Size&& i < G2.Size; i++)
-            {
-                for(int j=0;j<G2.Size&&j<G1.Size;j++)
-                {
-                    if (G1.AdjacencyMatrix[i,j] == G2.AdjacencyMatrix[i,j])
-                    {
-                        mat[i, j] = 0;
-                    }
-                }
-            }
-            return new Graph(mat);
-        }
 
 
     }
