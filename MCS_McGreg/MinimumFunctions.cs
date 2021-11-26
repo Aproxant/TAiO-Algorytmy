@@ -58,16 +58,20 @@ namespace MCS_McGreg
         }
         public static AdjacencyMatrix SubstractionOfGraphs(AdjacencyMatrix G1, AdjacencyMatrix G2)
         {
-            int[][] mat = G1.matrix.Clone() as int[][];
-
-            for (int i = 0; i < G2.Size; i++)
+            //int[][] mat = G1.matrix.Clone() as int[][];
+            int[][] mat = new int[G1.Size][];
+            for (int i = 0; i < G1.Size; i++)
+                mat[i] = new int[G1.Size];
+            for (int i = G2.Size; i < G1.Size; i++)
             {
-                for (int j = 0; j < G2.Size; j++)
+                for (int j = G2.Size; j < G1.Size; j++)
                 {
+                    mat[i][j] = G1.matrix[i][j];
+                    /*
                     if (G1.matrix[i][j] == G2.matrix[i][j])
                     {
                         mat[i][j] = 0;
-                    }
+                    }*/
                 }
             }
             return new AdjacencyMatrix(mat);

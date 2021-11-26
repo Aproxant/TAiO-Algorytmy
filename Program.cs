@@ -60,10 +60,12 @@ namespace Program
                                 case 'a':
                                     var biggestSubExact = BruttForce.MyBrutForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
                                     Console.WriteLine(biggestSubExact);
+                                    Console.WriteLine($"Number of Edges {biggestSubExact.EdgeNumber}");
                                     break;
                                 case 'b':
                                     var biggestSubAprox = BruttForce.MyBrutForceApproximate(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
                                     Console.WriteLine(biggestSubAprox);
+                                    Console.WriteLine($"Number of Edges {biggestSubAprox.EdgeNumber}");
 
                                     break;
                             }
@@ -78,10 +80,12 @@ namespace Program
                                 case 'a':
                                     var minGraphExact = MinimumFunctions.MinimumSuperGraph(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix),false);
                                     Console.WriteLine(minGraphExact);
+                                    Console.WriteLine($"Number of Edges {minGraphExact.EdgeNumber}");
                                     break;
                                 case 'b':
                                     var minGraphApprox = MinimumFunctions.MinimumSuperGraph(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix), true);
-                                    Console.WriteLine(minGraphApprox); 
+                                    Console.WriteLine(minGraphApprox);
+                                    Console.WriteLine($"Number of Edges {minGraphApprox.EdgeNumber}");
                                     break;
                             }
                             break;
