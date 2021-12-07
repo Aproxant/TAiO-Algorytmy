@@ -11,7 +11,7 @@ namespace MCS_McGreg
 {
     public static class MinimumFunctions
     {
-        public static AdjacencyMatrix MinimumSuperGraph(AdjacencyMatrix G1, AdjacencyMatrix G2,bool appro)
+        public static AdjacencyMatrix MinimumSuperGraph(AdjacencyMatrix G1, AdjacencyMatrix G2, bool appro)
         {
             if (G1.Size < G2.Size)
             {
@@ -24,7 +24,25 @@ namespace MCS_McGreg
                 Mcs = BruttForce.MyBrutForceApproximate(G1, G2);
             else
                 Mcs = BruttForce.MyBrutForce(G1, G2);
-
+            if (G1.Size == G2.Size)
+            {
+                int[][] graph= new int[G1.Size][];
+                for(int i = 0; i < G1.Size; i++)
+                {
+                    graph[i] = new int[G1.Size];
+                }
+                for(int i = 0; i < G1.Size; i++)
+                {
+                    for(int y = 0; y < G2.Size; y++)
+                    {
+                        if (G1.matrix[i][y] == 1 || G2.matrix[i][y] == 1)
+                        {
+                            graph[i][y] = 1;
+                        }
+                    }
+                }
+                return new AdjacencyMatrix(graph);
+            }
             AdjacencyMatrix G1_mcs = SubstractionOfGraphs(G1, Mcs);
 
             AdjacencyMatrix G2_mcs = SubstractionOfGraphs(G2, Mcs);
@@ -48,6 +66,7 @@ namespace MCS_McGreg
                 minGraph[i] = new int[maxSize];
             foreach(AdjacencyMatrix sub in subGraphs)
             {
+                Console.WriteLine(sub);
                 for (int i = 0; i < sub.Size; i++)
                     for (int j = 0; j < sub.Size; j++)
                         if(sub.matrix[i][j]==1)

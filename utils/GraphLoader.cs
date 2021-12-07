@@ -13,9 +13,10 @@ namespace TAiO_Algorytmy
         public static Graph LoadGraph(string pathToFile, string name)
         {
             DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
-
-            if (!File.Exists(dir.Parent.FullName + "/"+pathToFile))
+            if (!File.Exists(dir.Parent.FullName + "\\"+pathToFile))
             {
+                Console.WriteLine(dir.Parent.FullName);
+
                 throw new FileNotFoundException(pathToFile);
             }
             using (var reader = new StreamReader(pathToFile))
@@ -59,12 +60,10 @@ namespace TAiO_Algorytmy
         }
         public static (Graph, Graph) SingleFileGraphLoader(string pathToFile, string name)
         {
-            string currentDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-
-            if (!File.Exists(currentDirectory + "/" + pathToFile))
+            DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
+            if (!File.Exists(dir.FullName + "\\" + pathToFile))
             {
-                
-                throw new FileNotFoundException(pathToFile);
+                throw new FileNotFoundException(dir.FullName + "\\" + pathToFile);
             }
             using (var reader = new StreamReader(pathToFile))
             {
