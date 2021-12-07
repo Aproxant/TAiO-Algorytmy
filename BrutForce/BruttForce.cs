@@ -7,7 +7,7 @@ using TAiO_Algorytmy;
 
 namespace BrutForce
 {
-    static class BruttForce
+    public static class BruttForce
     {
         public static AdjacencyMatrix MyBrutForce(AdjacencyMatrix A, AdjacencyMatrix B)
         {
@@ -20,29 +20,24 @@ namespace BrutForce
             PermutationGenerator permu = new PermutationGenerator(A.Size);
 
             AdjacencyMatrix biggestSubGraph = null;
+            int[] order;
             int maxCommonEdges = 0;
-
             for (int i = 0; i < permu.permutations.Length; i++)
             {
+                order = permu.permutations[i].Clone() as int[];
                 AdjacencyMatrix M = GetMatrixfromPer(permu.permutations[i], A);
-                for (int x = 0; x <= M.Size - B.Size; x++)
+                AdjacencyMatrix subMatrix = GetSubMatrix(B.Size,M.matrix);
+                AdjacencyMatrix commonMatrix = CommonMatrix(subMatrix, B);
+                commonMatrix.UpdateEdges();
+                if (commonMatrix.EdgeNumber > maxCommonEdges)
                 {
-                    for (int y = 0; y <= M.Size - B.Size; y++)
-                    {
-                        AdjacencyMatrix subMatrix = M.GetSubMatrix(x, y, B.Size);
-                        AdjacencyMatrix commonMatrix =CommonMatrix(subMatrix, B);
-                        commonMatrix.UpdateEdges();
-                        if (commonMatrix.EdgeNumber > maxCommonEdges)
-                        {
-                            maxCommonEdges = commonMatrix.EdgeNumber;
-                            biggestSubGraph = commonMatrix;
-                        }
-                    }
+                    maxCommonEdges = commonMatrix.EdgeNumber;
+                    biggestSubGraph = commonMatrix;
+                    biggestSubGraph.VerticeOrder = order.Clone() as int[]; ;
                 }
             }
             return biggestSubGraph;
         }
-
         public static AdjacencyMatrix MyBrutForceApproximate(AdjacencyMatrix A, AdjacencyMatrix B)
         {
             if (A.Size < B.Size)
@@ -53,24 +48,22 @@ namespace BrutForce
             }
             A.SortMatrix();
             B.SortMatrix();
-            AdjacencyMatrix biggestSubGraph = null;
-            int maxCommonEdges = 0;
-            for (int x = 0; x <= A.Size - B.Size; x++)
-            {
-                for (int y = 0; y <= A.Size - B.Size; y++)
-                {
-                    AdjacencyMatrix subMatrix = A.GetSubMatrix(x, y, B.Size);
-                    AdjacencyMatrix commonMatrix = CommonMatrix(subMatrix, B);
-                    commonMatrix.UpdateEdges();
-                    if (commonMatrix.EdgeNumber > maxCommonEdges)
-                    {
-                        maxCommonEdges = commonMatrix.EdgeNumber;
-                        biggestSubGraph = commonMatrix;
-                    }
-                }
-            }
-            return biggestSubGraph;
+            AdjacencyMatrix subMatrix = GetSubMatrix(B.Size, A.matrix);
+            AdjacencyMatrix commonMatrix = CommonMatrix(subMatrix, B);
+            commonMatrix.UpdateEdges();
+            return commonMatrix;
         }
+        public static  AdjacencyMatrix GetSubMatrix(int size, int[][] mat)
+        {
+            Array.Resize(ref mat, size);
+            for(int i=0;i<mat.Length;i++)
+            {
+                Array.Resize(ref mat[i], size);
+            }
+            return new AdjacencyMatrix(mat);
+
+        }
+
 
         public static AdjacencyMatrix GetMatrixfromPer(int[] list, AdjacencyMatrix matPer)
         {

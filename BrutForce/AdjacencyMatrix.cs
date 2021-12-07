@@ -12,6 +12,7 @@ namespace BrutForce
 
         public int[][] matrix { get; set; }
         public int EdgeNumber;
+        public int[] VerticeOrder;
         public AdjacencyMatrix(int[][] graph)
         {
             InitializeMatrix(graph);
@@ -85,36 +86,28 @@ namespace BrutForce
             list[index2] = tmp;
         }
 
-        public AdjacencyMatrix GetSubMatrix(int startIndexX, int startIndexY, int size)
-        {
-            int[][] subGraph = new int[size][];
-            for(int i=0;i<size;i++)
-            {
-                subGraph[i] = new int[size];
-            }
-            for (int i = startIndexX; i < startIndexX + size; i++)
-            {
-                for (int j = startIndexY; j < startIndexY + size; j++)
-                {
-                    subGraph[i - startIndexX][j - startIndexY] = matrix[i][j];
-                }
-            }
-
-            return new AdjacencyMatrix(subGraph);
-        }
         public  void SortMatrix()
         {
+            int[] order = new int[Size];
+            int tmp;
+            for (int i = 0; i < Size; i++)
+                order[i] = i;
             for (int i = 0; i < Size; i++)
             {
                 for (int j = 0; j < Size; j++)
                 {
+                    
                     if(vertexDegree(i)>vertexDegree(j))
                     {
+                        tmp = order[i];
+                        order[i] = order[j];
+                        order[j] = tmp;
                         SwapColumn(i, j);
-                        SwapRow(i, j);
+                        SwapRow(i, j);                       
                     }
                 }
             }
+            VerticeOrder = order;
         }
         private int vertexDegree(int n)
         {

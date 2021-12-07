@@ -78,12 +78,12 @@ namespace Program
                             switch (val2)
                             {
                                 case 'a':
-                                    var minGraphExact = MinimumFunctions.MinimumSuperGraph(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix),false);
+                                    var minGraphExact = MinBrutt.MinBruttForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
                                     Console.WriteLine(minGraphExact);
                                     Console.WriteLine($"Number of Edges {minGraphExact.EdgeNumber}");
                                     break;
                                 case 'b':
-                                    var minGraphApprox = MinimumFunctions.MinimumSuperGraph(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix), true);
+                                    var minGraphApprox = MinimumAppro.MinimumSuperGraph(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
                                     Console.WriteLine(minGraphApprox);
                                     Console.WriteLine($"Number of Edges {minGraphApprox.EdgeNumber}");
                                     break;

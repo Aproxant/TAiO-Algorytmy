@@ -9,9 +9,9 @@ using BrutForce;
 
 namespace MCS_McGreg
 {
-    public static class MinimumFunctions
+    public static class MinimumAppro
     {
-        public static AdjacencyMatrix MinimumSuperGraph(AdjacencyMatrix G1, AdjacencyMatrix G2,bool appro)
+        public static AdjacencyMatrix MinimumSuperGraph(AdjacencyMatrix G1, AdjacencyMatrix G2)
         {
             if (G1.Size < G2.Size)
             {
@@ -20,20 +20,61 @@ namespace MCS_McGreg
                 G2 = tmp;
             }
             AdjacencyMatrix Mcs;
-            if (appro)
-                Mcs = BruttForce.MyBrutForceApproximate(G1, G2);
-            else
-                Mcs = BruttForce.MyBrutForce(G1, G2);
+            Mcs = BruttForce.MyBrutForceApproximate(G1, G2);
+
+            int[] per1 = G1.VerticeOrder.Clone() as int[];
+            int[] per2 = G1.VerticeOrder.Clone() as int[];
+
+            int[] per11 = G2.VerticeOrder.Clone() as int[];
+            int[] per22 = G2.VerticeOrder.Clone() as int[];
+            G1 = BruttForce.GetMatrixfromPer(G1.VerticeOrder, G1);
+
+            G2 = BruttForce.GetMatrixfromPer(G2.VerticeOrder, G2);
 
             AdjacencyMatrix G1_mcs = SubstractionOfGraphs(G1, Mcs);
 
             AdjacencyMatrix G2_mcs = SubstractionOfGraphs(G2, Mcs);
 
-            AdjacencyMatrix Mcs_G1_emb1 = FindSetOfEmbeddedEdges(Mcs, G1);
-            AdjacencyMatrix Mcs_G2_emb2 = FindSetOfEmbeddedEdges(Mcs, G2);
             
+
+            AdjacencyMatrix Mcs_G1_emb1 = FindSetOfEmbeddedEdges(Mcs, G1);
+
+            
+
+
+            AdjacencyMatrix Mcs_G2_emb2 = FindSetOfEmbeddedEdges(Mcs, G2);
+
+            G1_mcs = RevertPer(per1, G1_mcs);
+            Mcs_G1_emb1 = RevertPer(per2, Mcs_G1_emb1);
+
+            G2_mcs = RevertPer(per11, G1_mcs);
+            Mcs_G2_emb2 = RevertPer(per22, Mcs_G1_emb1);
+
             List<AdjacencyMatrix> subGraphs = new List<AdjacencyMatrix> { Mcs, Mcs_G1_emb1, G1_mcs, Mcs_G2_emb2, G2_mcs };
             return GenerateSuperGraph(subGraphs);
+        }
+        public static AdjacencyMatrix RevertPer(int[] list, AdjacencyMatrix matPer)
+        {
+
+            AdjacencyMatrix newMatrix = new AdjacencyMatrix(matPer.matrix);
+            int[] orginalOrder = new int[list.Length];
+            for(int i=0;i<orginalOrder.Length;i++)
+            {
+                orginalOrder[i] = i;
+            }
+            for (int j = 0; j < list.Length; j++)
+            {
+                for (int i = 0; i < list.Length; i++)
+                {
+                    if (list[i] != orginalOrder[i])
+                    {
+                        newMatrix.SwapColumn(list[i], orginalOrder[i]);
+                        newMatrix.SwapRow(list[i], orginalOrder[i]);
+                        newMatrix.Swap(list, list[i], orginalOrder[i]);
+                    }
+                }
+            }
+            return newMatrix;
         }
         public static AdjacencyMatrix GenerateSuperGraph(List<AdjacencyMatrix> subGraphs)
         {
@@ -58,7 +99,6 @@ namespace MCS_McGreg
         }
         public static AdjacencyMatrix SubstractionOfGraphs(AdjacencyMatrix G1, AdjacencyMatrix G2)
         {
-            //int[][] mat = G1.matrix.Clone() as int[][];
             int[][] mat = new int[G1.Size][];
             for (int i = 0; i < G1.Size; i++)
                 mat[i] = new int[G1.Size];
@@ -67,11 +107,6 @@ namespace MCS_McGreg
                 for (int j = G2.Size; j < G1.Size; j++)
                 {
                     mat[i][j] = G1.matrix[i][j];
-                    /*
-                    if (G1.matrix[i][j] == G2.matrix[i][j])
-                    {
-                        mat[i][j] = 0;
-                    }*/
                 }
             }
             return new AdjacencyMatrix(mat);
