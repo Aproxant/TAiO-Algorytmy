@@ -30,8 +30,8 @@ namespace TAiO_Algorytmy
 
         public Graph(int[,] matrix)
         {
-            if (!IsAdjacencyMatrixCorrect(matrix))
-                throw new ArgumentException("Invalid input matrix");
+            //if (!IsAdjacencyMatrixCorrect(matrix))
+            //    throw new ArgumentException("Invalid input matrix");
             _adjacencyMatrix = matrix;
             for (var i = 0; i < Size; i++)
                 for (var j = 0; j < i; j++)
@@ -41,8 +41,8 @@ namespace TAiO_Algorytmy
         public Graph(int[,] matrix, string name)
         {
             this._graphName = name;
-            if (!IsAdjacencyMatrixCorrect(matrix))
-                throw new ArgumentException("Invalid input matrix");
+            //if (!IsAdjacencyMatrixCorrect(matrix))
+            //    throw new ArgumentException("Invalid input matrix");
             _adjacencyMatrix = matrix;
             for (var i = 0; i < Size; i++)
                 for (var j = 0; j < i; j++)

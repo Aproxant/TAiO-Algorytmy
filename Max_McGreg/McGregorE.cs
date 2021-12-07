@@ -74,7 +74,11 @@ namespace MAX_McGreg
         private static bool PruningCondition(State s, State max)
         {
             int limit = s.G1.GetLength(0);
-            return limit - s.countOfNullNodes <= max.correspondingVerticles.Count - max.countOfNullNodes;
+            if ((s.correspondingVerticles.Count - s.countOfNullNodes) + (limit - s.correspondingVerticles.Count) >= max.correspondingVerticles.Count)
+            {
+                return false;
+            }
+            return true;
         }
 
         private static bool isFeasiblePair(State s, Tuple<int, int> pair, ref int countOfEdges)
