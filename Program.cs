@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using BrutForce;
 using MAX_McGreg;
 using MCS_McGreg;
 using TAiO_Algorytmy;
+using TAIO_konsola.utils;
 
 namespace Program
 {
@@ -44,10 +46,26 @@ namespace Program
                             switch (val1)
                             {
                                 case 'a':
-                                    MaxMcgregor.RunExact(args);
+                                    Stopwatch sw = new Stopwatch();
+
+                                    sw.Start();
+
+                                    MaxMcgregor.RunExact(G1,G2);
+
+                                    sw.Stop();
+
+                                    Console.WriteLine("Elapsed={0}", sw.Elapsed);
                                     break;
                                 case 'b':
-                                    MaxMcgregor.RunApprox(args);
+                                    Stopwatch sw2 = new Stopwatch();
+
+                                    sw2.Start();
+
+                                    MaxMcgregor.RunApprox(G1,G2);
+
+                                    sw2.Stop();
+
+                                    Console.WriteLine("Elapsed={0}", sw2.Elapsed);
                                     break;
                             }
                             break;
@@ -58,15 +76,23 @@ namespace Program
                             switch (val3)
                             {
                                 case 'a':
-                                    var biggestSubExact = BruttForce.MyBrutForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+                                    Stopwatch sw = new Stopwatch();
+                                    sw.Start();
+                                     var biggestSubExact = BruttForce.MyBrutForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+                                    sw.Stop();
+                                    Console.WriteLine("Elapsed={0}", sw.Elapsed);
                                     Console.WriteLine(biggestSubExact);
                                     Console.WriteLine($"Number of Edges {biggestSubExact.EdgeNumber}");
                                     break;
                                 case 'b':
+                                    Stopwatch sw2 = new Stopwatch();
+                                    sw2.Start();
                                     var biggestSubAprox = BruttForce.MyBrutForceApproximate(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
-                                    Console.WriteLine(biggestSubAprox);
-                                    Console.WriteLine($"Number of Edges {biggestSubAprox.EdgeNumber}");
-
+                                    //Console.WriteLine(biggestSubAprox);
+                                    sw2.Stop();
+                                    Console.WriteLine("Elapsed={0}", sw2.Elapsed);
+                                    Console.WriteLine($"\nNumber of Edges {biggestSubAprox.EdgeNumber}");
+                                    GraphDisplayer.printGraphWithDifferences(new AdjacencyMatrix(G1.AdjacencyMatrix),new AdjacencyMatrix(G2.AdjacencyMatrix), biggestSubAprox);
                                     break;
                             }
                             break;
@@ -78,16 +104,27 @@ namespace Program
                             switch (val2)
                             {
                                 case 'a':
+                                    Stopwatch sw = new Stopwatch();
+                                    sw.Start();
                                     var minGraphExact = MinBrutt.MinBruttForce(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+                                    sw.Stop();
+                                    Console.WriteLine("\nElapsed={0}", sw.Elapsed);
                                     Console.WriteLine(minGraphExact);
                                     Console.WriteLine($"Number of Edges {minGraphExact.EdgeNumber}");
                                     break;
                                 case 'b':
+                                    Stopwatch sw2 = new Stopwatch();
+                                    sw2.Start();
                                     var minGraphApprox = MinimumAppro.MinimumSuperGraph(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+                                    sw2.Stop();
+                                    Console.WriteLine("\nElapsed={0}", sw2.Elapsed);
                                     Console.WriteLine(minGraphApprox);
                                     Console.WriteLine($"Number of Edges {minGraphApprox.EdgeNumber}");
                                     break;
                             }
+                            break;
+                        case '8':
+                            GraphTester.Run();
                             break;
                         case '9':
                             flag = false;

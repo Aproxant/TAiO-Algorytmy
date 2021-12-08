@@ -34,29 +34,25 @@ namespace MAX_McGreg
 
         }
 
-        public static void RunExact(String[] args)
+        public static void RunExact(Graph G1, Graph G2)
         {
-            string file1 = args[0];
         
-            ( Graph G1, Graph G2) = GraphLoader.SingleFileGraphLoader(file1, "g");
             Console.WriteLine("Processing graph...");
             State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix); //bug
             Console.Write("V+E Solution\n");
             McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s, false);
-            Console.WriteLine(s);
+            //Console.WriteLine(s);
 
         }
 
-        public static void RunApprox(String[] args)
+        public static void RunApprox(Graph G1, Graph G2)
         {
-            string file1 = args[0];
 
-            (Graph G1, Graph G2) = GraphLoader.SingleFileGraphLoader(file1, "g");
             Console.WriteLine("Processing graph...");
             State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix);
             Console.Write("V+E Solution\n");
             McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s, true);
-            Console.WriteLine(s);
+            //Console.WriteLine(s);
 
         }
 

@@ -61,9 +61,15 @@ namespace TAiO_Algorytmy
         public static (Graph, Graph) SingleFileGraphLoader(string pathToFile, string name)
         {
             DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
-            if (!File.Exists(dir.FullName + "\\" + pathToFile))
+            // WINDOWS
+            //if (!File.Exists(dir.FullName + "\\" + pathToFile))
+            //{
+            //    throw new FileNotFoundException(dir.FullName + "\\" + pathToFile);
+            //}
+            // MAC
+            if (!File.Exists(dir.FullName + "/" + pathToFile))
             {
-                throw new FileNotFoundException(dir.FullName + "\\" + pathToFile);
+                throw new FileNotFoundException(dir.FullName + "/" + pathToFile);
             }
             using (var reader = new StreamReader(pathToFile))
             {
@@ -74,13 +80,13 @@ namespace TAiO_Algorytmy
                     var graphSize = int.Parse(reader.ReadLine());
                     for (int i = 1; i < 1 + graphSize; i++)
                     {
-                        var lineValues = reader.ReadLine().Split(',');
+                        var lineValues = reader.ReadLine().Split(' ');
                         graph1Lines.Add(lineValues);
                     }
                     var graph2Size = int.Parse(reader.ReadLine());
                     for (int i = 1; i < 1 + graph2Size; i++)
                     {
-                        var lineValues = reader.ReadLine().Split(',');
+                        var lineValues = reader.ReadLine().Split(' ');
                         graph2Lines.Add(lineValues);
                     }
 
