@@ -89,7 +89,6 @@ namespace MCS_McGreg
                 minGraph[i] = new int[maxSize];
             foreach(AdjacencyMatrix sub in subGraphs)
             {
-                Console.WriteLine(sub);
                 for (int i = 0; i < sub.Size; i++)
                     for (int j = 0; j < sub.Size; j++)
                         if(sub.matrix[i][j]==1)
