@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BrutForce;
 using TAiO_Algorytmy;
+using TAIO_konsola.utils;
 
 namespace MAX_McGreg
 {
@@ -41,10 +43,22 @@ namespace MAX_McGreg
             State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix); //bug
             Console.Write("V+E Solution\n");
             McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s, false);
-            //Console.WriteLine(s);
-
+            Console.WriteLine(s.countOfEdges);
+            GraphDisplayer.PrintTwoGraphsInRow(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+            //GraphDisplayer.printGraphWithDifferences(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix), s.);
+            Console.WriteLine(s);
         }
 
+        public static int RunExactWithEdgeCount(Graph G1, Graph G2)
+        {
+
+            Console.WriteLine("Processing graph...");
+            State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix); //bug
+            Console.Write("V+E Solution\n");
+            McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s, false);
+            return s.countOfEdges;
+
+        }
         public static void RunApprox(Graph G1, Graph G2)
         {
 
@@ -52,7 +66,8 @@ namespace MAX_McGreg
             State s = new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix);
             Console.Write("V+E Solution\n");
             McGregorE.McGregor(new State(G1.AdjacencyMatrix, G2.AdjacencyMatrix), ref s, true);
-            //Console.WriteLine(s);
+            GraphDisplayer.PrintTwoGraphsInRow(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+            Console.WriteLine(s);
 
         }
 

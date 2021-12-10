@@ -83,6 +83,9 @@ namespace Program
                                     Console.WriteLine("Elapsed={0}", sw.Elapsed);
                                     Console.WriteLine(biggestSubExact);
                                     Console.WriteLine($"Number of Edges {biggestSubExact.EdgeNumber}");
+                                    GraphDisplayer.PrintTwoGraphsInRow(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+                                    GraphDisplayer.printGraphWithDifferences(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix), biggestSubExact);
+
                                     break;
                                 case 'b':
                                     Stopwatch sw2 = new Stopwatch();
@@ -92,6 +95,7 @@ namespace Program
                                     sw2.Stop();
                                     Console.WriteLine("Elapsed={0}", sw2.Elapsed);
                                     Console.WriteLine($"\nNumber of Edges {biggestSubAprox.EdgeNumber}");
+                                    GraphDisplayer.PrintTwoGraphsInRow(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
                                     GraphDisplayer.printGraphWithDifferences(new AdjacencyMatrix(G1.AdjacencyMatrix),new AdjacencyMatrix(G2.AdjacencyMatrix), biggestSubAprox);
                                     break;
                             }
@@ -111,6 +115,9 @@ namespace Program
                                     Console.WriteLine("\nElapsed={0}", sw.Elapsed);
                                     Console.WriteLine(minGraphExact);
                                     Console.WriteLine($"Number of Edges {minGraphExact.EdgeNumber}");
+                                    GraphDisplayer.PrintTwoGraphsInRow(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+                                    GraphDisplayer.printGraphWithDifferences(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix), minGraphExact);
+
                                     break;
                                 case 'b':
                                     Stopwatch sw2 = new Stopwatch();
@@ -120,6 +127,9 @@ namespace Program
                                     Console.WriteLine("\nElapsed={0}", sw2.Elapsed);
                                     Console.WriteLine(minGraphApprox);
                                     Console.WriteLine($"Number of Edges {minGraphApprox.EdgeNumber}");
+                                    GraphDisplayer.PrintTwoGraphsInRow(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+                                    GraphDisplayer.printGraphWithDifferences(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix), minGraphApprox);
+
                                     break;
                             }
                             break;
