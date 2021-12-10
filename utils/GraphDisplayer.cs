@@ -22,7 +22,7 @@ namespace TAIO_konsola.utils
                     Console.Write(" ");
 
                 }
-                if (i <= B.Size)
+                if (i < B.Size)
                 {
                     Console.Write(" ");
                     Console.Write(" ");
@@ -30,11 +30,15 @@ namespace TAIO_konsola.utils
 
                     for (int g = 0; g < B.Size; g++)
                     {
-                        if (B.matrix[i][g] == 1)
-                        Console.ForegroundColor = ConsoleColor.Green;
-                        Console.Write(A.matrix[i][g]);
-                        Console.ResetColor();
-                        Console.Write(" ");
+                        if(g < B.matrix[i].Length)
+                        {
+                            if (B.matrix[i][g] == 1)
+                                Console.ForegroundColor = ConsoleColor.Green;
+                            Console.Write(B.matrix[i][g]);
+                            Console.ResetColor();
+                            Console.Write(" ");
+                        }
+                     
 
                     }
                 }
@@ -53,7 +57,7 @@ namespace TAIO_konsola.utils
                     {
                         Console.ForegroundColor = ConsoleColor.Blue;
                     }
-                    if (b1.matrix[i][j] == a2.matrix[i][j] && a2.matrix[i][j] == 1)
+                    if ( b1.matrix.Length > i && b1.matrix[i].Length > j && b1.matrix[i][j] == a2.matrix[i][j] && a2.matrix[i][j] == 1)
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                     }
