@@ -62,15 +62,15 @@ namespace TAiO_Algorytmy
         {
             DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
             // WINDOWS
-            //if (!File.Exists(dir.FullName + "\\" + pathToFile))
-            //{
-            //    throw new FileNotFoundException(dir.FullName + "\\" + pathToFile);
-            //}
-            // MAC
-            if (!File.Exists(dir.FullName + "/" + pathToFile))
+            if (!File.Exists(dir.FullName + "\\" + pathToFile))
             {
-                throw new FileNotFoundException(dir.FullName + "/" + pathToFile);
+                throw new FileNotFoundException(dir.FullName + "\\" + pathToFile);
             }
+            // MAC
+            //if (!File.Exists(dir.FullName + "/" + pathToFile))
+            //{
+            //    throw new FileNotFoundException(dir.FullName + "/" + pathToFile);
+            //}
             using (var reader = new StreamReader(pathToFile))
             {
                 var graph1Lines = new List<string[]>();

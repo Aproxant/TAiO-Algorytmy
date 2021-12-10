@@ -23,8 +23,8 @@ namespace Program
             try
             {
                 (var G1, var G2) = GraphLoader.SingleFileGraphLoader(args[0], "G");
-                Console.WriteLine(G1);
-                Console.WriteLine(G2);
+                GraphDisplayer.PrintTwoGraphsInRow(new AdjacencyMatrix(G1.AdjacencyMatrix), new AdjacencyMatrix(G2.AdjacencyMatrix));
+
                 bool flag = true;
                 while (flag)
                 {
